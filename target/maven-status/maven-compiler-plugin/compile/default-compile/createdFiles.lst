@@ -1,0 +1,8 @@
+com\example\spring\Model\Libros.class
+com\example\spring\Controller\AutoresController.class
+com\example\spring\Model\Autores.class
+com\example\spring\Repository\AutoresRepository.class
+com\example\spring\Service\AutoresService.class
+com\example\spring\Dto\AutorespecificoDto.class
+com\example\spring\BibliotecaApplication.class
+com\example\spring\Model\Editoriales.class
