@@ -4,11 +4,13 @@
  */
 package com.example.spring.Service;
 
+import com.example.spring.CustomException.CustomException;
 import com.example.spring.Dto.AutorespecificoDto;
 import com.example.spring.Model.Autores;
 import com.example.spring.Repository.AutoresRepository;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 /**
@@ -51,7 +53,7 @@ public class AutoresService {
             objautrep.save(aut);
             return "Guardado exitosamente";
         } else {
-            return "el autor ya existe en la bd";
+            throw new CustomException(HttpStatus.CONFLICT.value(), "el autor ya existe en la bd");
         }
     }
     
@@ -65,7 +67,7 @@ public class AutoresService {
              objautrep.save(autor);
              return "Se actualizo exitosamente";
         }else {
-            return "el autor no existe en la bd";
+            throw new CustomException(HttpStatus.NOT_FOUND.value(), "el autor no existe en la bd");
         }
     }
     
@@ -78,7 +80,7 @@ public class AutoresService {
              objautrep.deleteById(autor.getAutorId());
              return "Se elimino correctamente";
         }else {
-            return "el autor no existe en la bd";
+            throw new CustomException(HttpStatus.NOT_FOUND.value(), "el autor no existe en la bd");
         }
     }
     
