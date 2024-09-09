@@ -6,6 +6,11 @@
     <class>com.example.spring.Model.Libros</class>
     <class>com.example.spring.Model.Editoriales</class>
     <class>com.example.spring.Model.Admin</class>
+    <class>com.example.spring.Model.IngresoPersonal</class>
+    <class>com.example.spring.Model.Registro</class>
+    <class>com.example.spring.Model.EgresoPersonal</class>
+    <class>com.example.spring.Model.AdministrarDatos</class>
+    <class>com.example.spring.Model.EditarUsuario</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/biblioteca"/>
       <property name="javax.persistence.jdbc.user" value="root"/>

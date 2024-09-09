@@ -22,6 +22,9 @@ public class DtoInfoLogin {
     public static class Usuario{
         private String usuario;
         private String contraseña;
+        
+        
+        
     }
 
 }

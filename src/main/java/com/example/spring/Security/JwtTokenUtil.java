@@ -24,7 +24,7 @@ public class JwtTokenUtil {
     private static final long EXPIRATION_TIME = 10800000; //3 horas
 
     public String generateToken(String username) {
-        Date now = new Date();
+        Date now = new Date(); 
         Date expiryDate = new Date(now.getTime() + EXPIRATION_TIME);
         return Jwts.builder()
                 .setSubject(username)

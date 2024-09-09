@@ -11,13 +11,14 @@ import org.springframework.http.HttpStatus;
  *
  * @author l
  */
+
 public class CustomException extends RuntimeException {
     
     private String timestamp;
     private int status;
     private String error;
     private String motive;
-//    private String path;  por ahora comentado, ver si hay una posible integracion mas adelante
+//   private String path;  por ahora comentado, ver si hay una posible integracion mas adelante
 
      public CustomException(int status, String motive) {
         super(motive);

@@ -4,48 +4,49 @@
  */
 package com.example.spring.Model;
 
-import java.io.Serializable;
-import java.util.List;
 import jakarta.persistence.Basic;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.NamedQueries;
-import jakarta.persistence.NamedQuery;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import java.io.Serializable;
 import lombok.Data;
 
-/**
- *
- * @author l
- */
-//jdk 8- jakarta
-//jdk 8 jakarta-jakarta
-//Jdk 8+ jakarta 
-
-
 @Entity
-@Table(name = "editoriales")
+@Table(name = "AdministrarDatos")
 @Data
-public class Editoriales implements Serializable {
+public class AdministrarDatos implements Serializable {
 
     private static final long serialVersionUID = 1L;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
-    @Column(name = "editorial_id")
-    private Integer editorialId;
+    @Column(name = "id")
+    private Long id; // Suponiendo que 'id' es una clave primaria autogenerada
+
     @Basic(optional = false)
     @Column(name = "nombre")
     private String nombre;
-    @Column(name = "direccion")
-    private String direccion;
-    @OneToMany(mappedBy = "editorialId")
-    private List<Libros> librosList;
 
-    
-    
+    @Basic(optional = false)
+    @Column(name = "apellido")
+    private String apellido;
+
+    @Basic(optional = false)
+    @Column(name = "documento")
+    private String documento;
+
+    @Basic(optional = false)
+    @Column(name = "telefono")
+    private String telefono;
+
+    @Basic(optional = false)
+    @Column(name = "correo_electronico")
+    private String correoElectronico;
+
+    @Basic(optional = false)
+    @Column(name = "planilla_seguridad_social")
+    private String planillaSeguridadSocial;
 }
