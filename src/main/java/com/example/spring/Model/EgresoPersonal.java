@@ -28,6 +28,6 @@ public class EgresoPersonal implements Serializable {
     private Long documento;  // Cambiado de Integer a Long
 
     @Basic(optional = false)
-    @Column(name = "fecha_hora_ingreso")
-    private LocalDateTime fechaHoraIngreso;  // Asegúrate de que la base de datos soporte LocalDateTime
+    @Column(name = "fecha_hora_egreso")
+    private LocalDateTime fecha_hora_egreso;  // Asegúrate de que la base de datos soporte LocalDateTime
 }

@@ -34,5 +34,5 @@ public class IngresoPersonal implements Serializable {
 
     @Basic(optional = false)
     @Column(name = "fecha_hora_ingreso")
-    private LocalDateTime fechaHoraIngreso;
+    private LocalDateTime fecha_hora_ingreso;
 }

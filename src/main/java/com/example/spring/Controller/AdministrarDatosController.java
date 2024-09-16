@@ -44,22 +44,36 @@ public class AdministrarDatosController {
     }
     
     @PostMapping("/nuevodato") // http://localhost:8080/AdministrarDatos/nuevodato
-    public ResponseEntity<?> creardato(@RequestHeader(value = "Authorization", required = false) String Token, AdministrarDatos dato) {
+    public ResponseEntity<?> creardato(
+            @RequestHeader(value = "Authorization", required = false) String token,
+            @RequestBody AdministrarDatos dato) {
+        
+        // Validar el objeto dato
+        if (dato.getNombre() == null || dato.getApellido() == null || 
+            dato.getDocumento() == null || dato.getTelefono() == null ||
+            dato.getCorreoElectronico() == null || dato.getPlanillaSeguridadSocial() == null) {
+            return ResponseEntity.badRequest().body("Error: Todos los campos obligatorios deben estar presentes");
+        }
+
         try {
-            Boolean res = authbalan.authjwt(Token);
-            if (res) {
-        String mensaje = administrarDatosService.guardardato(dato);
-        return ResponseEntity.status(HttpStatus.CREATED).body(mensaje);
-    }else {
+            // Verificar el token de autenticación
+            Boolean isAuthenticated = authbalan.authjwt(token);
+            if (isAuthenticated) {
+                // Guardar el dato y obtener el mensaje de respuesta
+                String mensaje = administrarDatosService.guardardato(dato);
+                return ResponseEntity.status(HttpStatus.CREATED).body(mensaje);
+            } else {
                 throw new CustomException(HttpStatus.UNAUTHORIZED.value(), "Sin firmar");
             }
         } catch (CustomException ex) {
-            
-            return ResponseEntity.status(ex.getStatus()).body(ex.toString());
+            // Manejo de excepciones personalizadas
+            return ResponseEntity.status(ex.getStatus()).body(ex.getMessage());
+        } catch (Exception ex) {
+            // Manejo de otras excepciones
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Error interno del servidor: " + ex.getMessage());
         }
     }
-    
-    
  @PutMapping("/actualizardato") // http://localhost:8080/AdministrarDatos/actualizardato
  
 public ResponseEntity<String> actualizardato(

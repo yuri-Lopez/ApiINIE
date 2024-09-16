@@ -23,13 +23,22 @@ public class AdministrarDatosService {
     }
     
     public String guardardato(AdministrarDatos dato) {
-        try {
-            administrarDatosRepository.save(dato);
-            return "Guardado exitosamente";
-        } catch (Exception e) {
-            return "Ocurrió un error al guardar: " + e.getMessage();
-        }
+    // Verifica que todos los campos obligatorios estén presentes
+    if (dato.getNombre() == null || dato.getApellido() == null || 
+        dato.getDocumento() == null || dato.getTelefono() == null ||
+        dato.getCorreoElectronico() == null || dato.getPlanillaSeguridadSocial() == null) {
+        return "Error: Todos los campos obligatorios deben estar presentes";
     }
+
+    try {
+        administrarDatosRepository.save(dato);
+        return "Guardado exitosamente";
+    } catch (Exception e) {
+        // Devuelve un mensaje de error sin registro
+        return "Ocurrió un error al guardar: " + e.getMessage();
+    }
+}
+    
     
     public String actualizardato(AdministrarDatos dato) {
         // Buscar el dato existente en la base de datos usando el documento
