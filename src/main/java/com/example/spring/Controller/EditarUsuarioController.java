@@ -6,7 +6,6 @@
 package com.example.spring.Controller;
 
 import com.example.spring.CustomException.CustomException;
-import com.example.spring.Model.AdministrarDatos;
 import com.example.spring.Model.EditarUsuario;
 import com.example.spring.Security.JwtBalancer;
 import com.example.spring.Service.EditarUsuarioService;
@@ -44,51 +43,51 @@ public class EditarUsuarioController {
         }
     }
     
-    @PostMapping("/nuevodato") // http://localhost:8080/editarusuario/nuevodato
-    public ResponseEntity<?> creardato(@RequestHeader(value = "Authorization", required = false) String Token, EditarUsuario dato) {
-        try {
-            Boolean res = authbalan.authjwt(Token);
-            if (res) {
-        String mensaje = editarUsuarioService.guardarUsuario(dato);
-        return ResponseEntity.status(HttpStatus.CREATED).body(mensaje);
-    }else {
-                throw new CustomException(HttpStatus.UNAUTHORIZED.value(), "Sin firmar");
-            }
-        } catch (CustomException ex) {
-            
-            return ResponseEntity.status(ex.getStatus()).body(ex.toString());
-        }
+    @PostMapping("/nuevodato")
+    public ResponseEntity<?> creardato(@RequestHeader(value = "Authorization", required = false) String Token, @RequestBody EditarUsuario dato) {
+    // Validar datos
+    if (dato == null || dato.getNombre() == null || dato.getApellido() == null ||
+        dato.getDocumento() == null || dato.getTelefono() == null ||
+        dato.getCorreoElectronico() == null || dato.getPlanillaSeguridadSocial() == null) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Error: Todos los campos obligatorios deben estar presentes");
     }
     
-    @PutMapping("/actualizardato") // http://localhost:8080/editarusuario/actualizardato
-    public ResponseEntity<String> actualizardato(
-        @RequestHeader(value = "Authorization", required = false) String Token, 
-        @RequestBody AdministrarDatos dato) {
     try {
-        // Authenticate the token
         Boolean res = authbalan.authjwt(Token);
         if (res) {
-        String mensaje = editarUsuarioService.actualizardato(dato);
-        if (mensaje.equals("Se actualizó correctamente")) {
-            return ResponseEntity.ok(mensaje);
+            String mensaje = editarUsuarioService.guardarUsuario(dato);
+            return ResponseEntity.status(HttpStatus.CREATED).body(mensaje);
         } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(mensaje);
-        }
-    }else {
-            // Unauthorized access
             throw new CustomException(HttpStatus.UNAUTHORIZED.value(), "Sin firmar");
         }
     } catch (CustomException ex) {
-        // Handle custom exceptions
         return ResponseEntity.status(ex.getStatus()).body(ex.getMessage());
     } catch (Exception ex) {
-        // Handle general exceptions
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred: " + ex.getMessage());
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Ocurrió un error: " + ex.getMessage());
     }
 }
+
+    
+    @PutMapping("/actualizardato")
+    public ResponseEntity<String> actualizardato(
+            @RequestHeader(value = "Authorization", required = false) String token,
+            @RequestBody EditarUsuario usuario) {
+        // Verifica que el token sea válido y realiza la actualización
+        Boolean isAuthenticated = authbalan.authjwt(token);
+        if (isAuthenticated) {
+            String mensaje = editarUsuarioService.actualizarUsuario(usuario);
+            if ("Se actualizó correctamente".equals(mensaje)) {
+                return ResponseEntity.ok(mensaje);
+            } else {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(mensaje);
+            }
+        } else {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Sin firmar");
+        }
+    }
     
     @DeleteMapping("/eliminar/{documento}") // http://localhost:8080/editarusuario/eliminar/{documento}
-public ResponseEntity<String> eliminardato(
+    public ResponseEntity<String> eliminardato(
         @RequestHeader(value = "Authorization", required = false) String token,
         @PathVariable("documento") String documento) {
     try {

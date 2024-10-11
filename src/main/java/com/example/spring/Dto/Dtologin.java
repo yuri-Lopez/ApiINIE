@@ -4,16 +4,19 @@
  */
 package com.example.spring.Dto;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  *
  * @author l
  */
 @Data
+@AllArgsConstructor // Constructor que acepta todos los parámetros
+@NoArgsConstructor  // Constructor por defecto
 public class Dtologin {
     
     private String usuario;
     private String contraseña;
-    
 }

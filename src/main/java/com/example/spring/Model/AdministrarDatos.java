@@ -49,4 +49,7 @@ public class AdministrarDatos implements Serializable {
     @Basic(optional = false)
     @Column(name = "planilla_seguridad_social")
     private String planillaSeguridadSocial;
+    
+    
+   
 }

@@ -34,4 +34,9 @@ public class Admin implements Serializable {
     @Column(name = "contrasena")
     private String contrasena;
     
+    
+    
+    
+       
+    
 }
